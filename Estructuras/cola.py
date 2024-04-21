@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLineEdit
 
 
-lista = ['|---------------------------------|']
+lista = ['|--------------salida--------------|']
 
 
 class MiVentana(QWidget):
@@ -12,10 +12,10 @@ class MiVentana(QWidget):
         self.initUI()
 
     def initUI(self):
-        # Crear un layout vertical
+
         self.layout = QVBoxLayout()
 
-        # Crear un botón inicial
+
         self.input_box = QLineEdit()
         self.boton = QPushButton('Agregar Nodo', self)
         self.boton.clicked.connect(self.agregar_bloque)
@@ -33,15 +33,15 @@ class MiVentana(QWidget):
         self.repintar()
 
 
-        # Agregar el layout a la ventana
+
         self.setLayout(self.layout)
 
-        # Configurar las propiedades de la ventana
         self.setWindowTitle('Ejemplo PyQt6')
-        self.setGeometry(100, 100, 300, 100)  # Establecer tamaño y posición inicial
+        self.setGeometry(100, 100, 300, 100)
 
 
     def refrescar(self):
+        print(lista)
         for i in range(len(lista) - 1):
             widget = self.layout.itemAt(self.layout.count() - 1).widget()
             self.layout.removeWidget(widget)
@@ -50,8 +50,8 @@ class MiVentana(QWidget):
 
     def eliminar_1(self):
         if len(lista) - 1:
-            widget = self.layout.itemAt(self.layout.count() - len(lista)).widget()
-            lista.pop()
+            widget = self.layout.itemAt(self.layout.count() - 2).widget()
+            lista.remove(lista[1])
             self.layout.removeWidget(widget)
             widget.deleteLater()
             self.setGeometry(100, 100, 300, 100)
@@ -73,7 +73,7 @@ class MiVentana(QWidget):
 
     def buscar_bloque(self):
         nume = self.input_box.text()
-        if nume != '|---------------------------------|':
+        if nume != '|--------------salida--------------|':
             cont = 0
             for i in range(1, len(lista) + 1):
                 if lista[-i] == nume:
@@ -84,19 +84,16 @@ class MiVentana(QWidget):
                 self.widget_changed.setStyleSheet("background-color: red;")
 
     def eliminar_bloque(self):
-        # Eliminar el botón que se ha hecho clic
         boton_presionado = self.sender()
         self.layout.removeWidget(boton_presionado)
         boton_presionado.deleteLater()
 
 
+
+
+
 if __name__ == '__main__':
-    # Crear la aplicación Qt
     app = QApplication(sys.argv)
-
-    # Crear la ventana
     ventana = MiVentana()
-    ventana.show()  # Mostrar la ventana
-
-    # Ejecutar la aplicación
+    ventana.show()
     sys.exit(app.exec())
