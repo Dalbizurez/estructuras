@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLineEdit
 
 
-lista = [0]
+lista = ['|---------------------------------|']
 
 
 class MiVentana(QWidget):
@@ -17,15 +17,18 @@ class MiVentana(QWidget):
 
         # Crear un botón inicial
         self.input_box = QLineEdit()
-        self.boton = QPushButton('Agregar Bloque', self)
+        self.boton = QPushButton('Agregar Nodo', self)
         self.boton.clicked.connect(self.agregar_bloque)
-        self.boton2 = QPushButton('Eliminar Primero', self)
+        self.boton2 = QPushButton('Eliminar Nodo', self)
         self.boton2.clicked.connect(self.eliminar_1)
+        self.boton3 = QPushButton('Buscar Nodo', self)
+        self.boton3.clicked.connect(self.buscar_bloque)
 
 
         self.layout.addWidget(self.input_box)
         self.layout.addWidget(self.boton)
         self.layout.addWidget(self.boton2)
+        self.layout.addWidget(self.boton3)
 
         self.repintar()
 
@@ -65,6 +68,18 @@ class MiVentana(QWidget):
         lista.append(nume)
         self.refrescar()
         self.repintar()
+
+    def buscar_bloque(self):
+        nume = self.input_box.text()
+        if nume != '|---------------------------------|':
+            cont = 0
+            for i in range(1, len(lista) + 1):
+                if lista[-i] == nume:
+                    break
+                cont += 1
+            if cont != len(lista):
+                self.widget_changed = self.layout.itemAt(self.layout.count() - (len(lista) - cont)).widget()
+                self.widget_changed.setStyleSheet("background-color: red;")
 
     def eliminar_bloque(self):
         # Eliminar el botón que se ha hecho clic

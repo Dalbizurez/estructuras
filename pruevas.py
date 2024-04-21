@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
 
 class MiVentana(QWidget):
     def __init__(self):
@@ -11,29 +11,20 @@ class MiVentana(QWidget):
         # Crear un layout vertical
         self.layout = QVBoxLayout()
 
-        # Crear un QLabel para indicar al usuario que escriba algo
-        self.label = QLabel('Escribe algo:')
-        self.layout.addWidget(self.label)
-
-        # Crear un QLineEdit para la entrada de texto
-        self.input_box = QLineEdit()
-        self.layout.addWidget(self.input_box)
-
-        # Crear un QPushButton para guardar el texto
-        self.boton_guardar = QPushButton('Guardar')
-        self.boton_guardar.clicked.connect(self.guardar_texto)
-        self.layout.addWidget(self.boton_guardar)
+        # Crear un botón
+        self.boton = QPushButton('Cambiar color', self)
+        self.boton.clicked.connect(self.cambiar_color)
+        self.layout.addWidget(self.boton)
 
         # Agregar el layout a la ventana
         self.setLayout(self.layout)
 
         # Configurar las propiedades de la ventana
-        self.setWindowTitle('Ejemplo PyQt6')
+        self.setWindowTitle('Cambiar color de un botón')
         self.setGeometry(100, 100, 300, 200)  # Establecer tamaño y posición inicial
 
-    def guardar_texto(self):
-        texto_ingresado = self.input_box.text()
-        print("Texto ingresado:", texto_ingresado)
+    def cambiar_color(self):
+        self.boton.setStyleSheet("background-color: red;")
 
 if __name__ == '__main__':
     # Crear la aplicación Qt
