@@ -17,10 +17,14 @@ class MiVentana(QWidget):
         self.layout2 = QVBoxLayout()
 
         self.input_box = QLineEdit()
-        self.boton = QPushButton('Agregar Nodo', self)
-        self.boton.clicked.connect(self.agregar_bloque)
-        self.boton2 = QPushButton('Eliminar Nodo', self)
-        self.boton2.clicked.connect(self.eliminar_1)
+        self.boton = QPushButton('Agregar Nodo Al Inicio', self)
+        self.boton.clicked.connect(self.agregar_inicio)
+        self.boton_1 = QPushButton('Agregar Nodo Al Final', self)
+        self.boton_1.clicked.connect(self.agregar_final)
+        self.boton2 = QPushButton('Eliminar Nodo Al Inicio', self)
+        self.boton2.clicked.connect(self.eliminar_derecha)
+        self.boton2_1 = QPushButton('Eliminar Nodo Al Final', self)
+        self.boton2_1.clicked.connect(self.eliminar_izquierda)
         self.boton3 = QPushButton('Buscar Nodo Por ID', self)
         self.boton3.clicked.connect(self.buscar_bloque)
         self.boton4 = QPushButton('Guardar', self)
@@ -30,7 +34,9 @@ class MiVentana(QWidget):
 
         self.layout2.addWidget(self.input_box)
         self.layout2.addWidget(self.boton)
+        self.layout2.addWidget(self.boton_1)
         self.layout2.addWidget(self.boton2)
+        self.layout2.addWidget(self.boton2_1)
         self.layout2.addWidget(self.boton3)
         self.layout2.addWidget(self.boton4)
         self.layout2.addWidget(self.boton5)
@@ -60,7 +66,17 @@ class MiVentana(QWidget):
 
 
 
-    def eliminar_1(self):
+    def eliminar_izquierda(self):
+        for x in range(2):
+            if len(lista) - 1:
+                widget = self.layout.itemAt(self.layout.count() - len(lista)).widget()
+                lista.pop()
+                self.layout.removeWidget(widget)
+                widget.deleteLater()
+            else:
+                print('Final')
+
+    def eliminar_derecha(self):
         for x in range(2):
             if len(lista) - 1:
                 widget = self.layout.itemAt(self.layout.count() - 2).widget()
@@ -79,20 +95,38 @@ class MiVentana(QWidget):
 
 
 
-    def agregar_bloque(self):
-        self.agregar_flecha()
-        print(lista[-1], id(lista[-1]))
+    def agregar_inicio(self):
+        self.agregar_flecha_inicio()
+        print(lista[-1], id(lista[-2]))
+        if len(lista) == 2:
+            nume = 'Nodo: ' + self.input_box.text() + '\nEspacio de memoria:\n' + str(id(lista[0]))
+        elif len(lista) == 4:
+            nume = 'Nodo: ' + self.input_box.text() + '\nEspacio de memoria:\n' + str(id(lista[-1]))
+        else:
+            nume = 'Nodo: ' + self.input_box.text() + '\nEspacio de memoria:\n' + str(id(lista[3]))
+        lista.insert(2, nume)
+
+        self.refrescar()
+        self.repintar()
+
+
+    def agregar_flecha_inicio(self):
+        lista.insert(1, '\n-->\n')
+        self.refrescar()
+        self.repintar()
+
+    def agregar_final(self):
+        self.agregar_flecha_final()
         nume = 'Nodo: ' + self.input_box.text() + '\nEspacio de memoria:\n' + str(id(lista[-2]))
         lista.append(nume)
         self.refrescar()
         self.repintar()
 
 
-    def agregar_flecha(self):
+    def agregar_flecha_final(self):
         lista.append('\n-->\n')
         self.refrescar()
         self.repintar()
-
 
     def buscar_bloque(self):
         nume = self.input_box.text()
