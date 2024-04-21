@@ -38,7 +38,7 @@ class MiVentana(QWidget):
 
         # Configurar las propiedades de la ventana
         self.setWindowTitle('Ejemplo PyQt6')
-        self.setGeometry(100, 100, 300, 200)  # Establecer tamaño y posición inicial
+        self.setGeometry(100, 100, 300, 100)  # Establecer tamaño y posición inicial
 
 
     def refrescar(self):
@@ -46,6 +46,7 @@ class MiVentana(QWidget):
             widget = self.layout.itemAt(self.layout.count() - 1).widget()
             self.layout.removeWidget(widget)
             widget.deleteLater()
+            self.setGeometry(100, 100, 300, 100)
 
     def eliminar_1(self):
         if len(lista) - 1:
@@ -53,6 +54,7 @@ class MiVentana(QWidget):
             lista.pop()
             self.layout.removeWidget(widget)
             widget.deleteLater()
+            self.setGeometry(100, 100, 300, 100)
         else:
             print('final')
 
