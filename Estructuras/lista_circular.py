@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLineEdit, QHBoxLayout
 from guardado import cargar_lista, guardar_lista
 
-lista = ['\nFinal\n']
+lista = ['\nCola\n']
 
 
 class MiVentana(QWidget):
