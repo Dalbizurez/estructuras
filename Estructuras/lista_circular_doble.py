@@ -17,14 +17,19 @@ class MiVentana(QWidget):
         self.layout2 = QVBoxLayout()
 
         self.input_box = QLineEdit()
+        self.input_box2 = QLineEdit()
         self.boton = QPushButton('Agregar Nodo Al Inicio', self)
         self.boton.clicked.connect(self.agregar_inicio)
         self.boton_1 = QPushButton('Agregar Nodo Al Final', self)
         self.boton_1.clicked.connect(self.agregar_final)
+        self.boton_2 = QPushButton('Agregar Nodo Por Posicion', self)
+        self.boton_2.clicked.connect(self.verificar_num)
         self.boton2 = QPushButton('Eliminar Nodo Al Final', self)
         self.boton2.clicked.connect(self.eliminar_derecha)
         self.boton2_1 = QPushButton('Eliminar Nodo Al Inicio', self)
         self.boton2_1.clicked.connect(self.eliminar_izquierda)
+        self.boton2_2 = QPushButton('Eliminar Nodo Por Posicion', self)
+        self.boton2_2.clicked.connect(self.verificar_num2)
         self.boton3 = QPushButton('Buscar Nodo Por ID', self)
         self.boton3.clicked.connect(self.buscar_bloque)
         self.boton4 = QPushButton('Guardar', self)
@@ -41,6 +46,9 @@ class MiVentana(QWidget):
         self.layout2.addWidget(self.boton_1)
         self.layout2.addWidget(self.boton2_1)
         self.layout2.addWidget(self.boton2)
+        self.layout2.addWidget(self.input_box2)
+        self.layout2.addWidget(self.boton_2)
+        self.layout2.addWidget(self.boton2_2)
         self.layout2.addWidget(self.boton6)
         self.layout2.addWidget(self.boton7)
         self.layout2.addWidget(self.boton3)
@@ -97,6 +105,7 @@ class MiVentana(QWidget):
         for i in range(1, len(lista) + 1):
             nuevo_boton = QPushButton(f'{lista[-i]}', self)
             self.layout.addWidget(nuevo_boton)
+            self.setGeometry(100, 100, 300, 100)
 
 
 
@@ -156,7 +165,71 @@ class MiVentana(QWidget):
         self.refrescar()
         self.repintar()
 
+    def verificar_num(self):
+        nume2 = self.input_box.text()
+        nume = self.input_box2.text()
+        try:
+            if int(nume):
+                print('entro a verificar', nume2)
+            self.agregar_en()
 
+        except(ValueError):
+            print('Valor incomoresible', nume)
+
+    def verificar_num2(self):
+        nume = self.input_box2.text()
+        try:
+            if int(nume):
+                print('entro a verificar')
+            self.eliminar_en()
+        except(ValueError):
+            print('Valor incomoresible', nume)
+
+    def eliminar_en(self):
+        nume = int(self.input_box2.text())
+        if nume == 0:
+            self.eliminar_izquierda()
+        elif nume >= ((len(lista) - 1) / 2):
+            self.eliminar_derecha()
+        else:
+            self.eliminar_sobras()
+            for i in range(2):
+                lista.pop(-(nume * 2))
+            self.refrescar()
+            widget = self.layout.itemAt(self.layout.count() - 1).widget()
+            self.layout.removeWidget(widget)
+            widget.deleteLater()
+            self.repintar()
+
+
+
+    def eliminar_sobras(self):
+        for i in range(2):
+            widget = self.layout.itemAt(self.layout.count() - 1).widget()
+            self.layout.removeWidget(widget)
+            widget.deleteLater()
+
+
+
+    def agregar_en(self):
+        nume = int(self.input_box2.text())
+        if nume == 0:
+            self.agregar_final()
+        elif nume >= ((len(lista) - 1) / 2):
+            self.agregar_inicio()
+        else:
+            agregado = self.input_box.text()
+            print(agregado)
+            self.agregar_texto_en()
+            lista.insert(-((nume * 2)), 'Nodo: ' + str(agregado) + '\nEspacio de memoria:\n' + str(id(lista[nume])))
+            self.refrescar()
+            self.repintar()
+
+    def agregar_texto_en(self):
+        nume = int(self.input_box2.text())
+        lista.insert(-((nume * 2) ), '\n<-->\n')
+        self.refrescar()
+        self.repintar()
 
 
     def buscar_bloque(self):
