@@ -17,6 +17,7 @@ class MiVentana(QWidget):
         self.layout2 = QVBoxLayout()
 
         self.input_box = QLineEdit()
+        self.input_box3 = QLineEdit()
         self.boton = QPushButton('Agregar Nodo', self)
         self.boton.clicked.connect(self.agregar_bloque)
         self.boton2 = QPushButton('Eliminar Nodo', self)
@@ -32,6 +33,7 @@ class MiVentana(QWidget):
         self.layout2.addWidget(self.boton)
         self.layout2.addWidget(self.boton2)
         self.layout2.addWidget(self.boton3)
+        self.layout2.addWidget(self.input_box3)
         self.layout2.addWidget(self.boton4)
         self.layout2.addWidget(self.boton5)
 
@@ -113,7 +115,7 @@ class MiVentana(QWidget):
 #guardados
 
     def guardar(self):
-        guardar_lista(lista, self.input_box.text())
+        guardar_lista(lista, self.input_box3.text())
 
     def limpiar(self):
         for i in range(len(lista)):
@@ -126,7 +128,7 @@ class MiVentana(QWidget):
         self.limpiar()
         lista.clear()
         self.repintar()
-        for i in cargar_lista(str(self.input_box.text())):
+        for i in cargar_lista(str(self.input_box3.text())):
             lista.append(str(i))
 
         self.repintar()
